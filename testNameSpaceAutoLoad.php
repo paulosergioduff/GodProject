@@ -2,10 +2,6 @@
 
 require 'vendor/autoload.php';
 
-$spacebar = new Spacebar;
+$bar = new \Diretorio1\Exemplo;
 
-echo "$spacebar\n";
-
-$bar = new \Hongster\Tutorial\Namespacing\Foo\Bar;
-
-echo "$bar\n";
+$bar->teste();
