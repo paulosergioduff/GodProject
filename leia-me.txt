@@ -1,0 +1,16 @@
+1 -> Criar composer.json com conteúdo
+
+{
+	"require": {},
+	"autoload": {
+		"psr-4": {"": "src/"}
+	}
+}
+
+2-> Aplicar composer install no shell
+
+3-> Fazer require de exemplo
+
+require 'vendor/autoload.php';
+
+4-> Organizar namespaces e diretórios
