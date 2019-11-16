@@ -1,24 +1,27 @@
 <?php
 
 require 'vendor/autoload.php';
+require 'config.php';
 
 $modulo = Url::getURL(0);
+$page404 = APPATH."404.php";
 
 if ($modulo == null)
    $modulo = "welcome";
 
-if (file_exists("app/testAPI/" . $modulo . ".php"))
-   require "app/testAPI/" . $modulo . ".php";
+if (file_exists( APPATH . $modulo . ".php"))
+   require APPATH . $modulo . ".php";
 else
-   require "app/testAPI/404.php";
+   require $page404;
 
 /* URLs disponíveis
 
 modulo1/
 modulo2/
-modulo8/parametro/sei-la/alguma_coisa/25/quase-nada/
+passagemDeParametros/parametro/sei-la/alguma_coisa/25/quase-nada/
 
 */
+
 ?>
 
 
