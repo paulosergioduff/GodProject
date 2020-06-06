@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)http://devfuria.com.br/linux/apache-habilitar-mod_rewrite-no-apache-mod/ -->
+<html lang="pt-br"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Habilitar mod_rewrite no Apache</title>
+
+    <link rel="shortcut icon" type="images/gif" href="http://devfuria.com.br/linux/assets/imagens/favicon.ico">
+
+    <meta name="description" content="Aprenda como habilitar o módulo mod_rewrite no servidor Apache">
+
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="./Habilitar mod_rewrite no Apache_files/css">
+    <!-- <link rel="stylesheet" href="/assets/font-awesome.min.css" > -->
+    <link rel="stylesheet" href="./Habilitar mod_rewrite no Apache_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Habilitar mod_rewrite no Apache_files/pygmentize-highlight.css">
+    <link rel="stylesheet" href="./Habilitar mod_rewrite no Apache_files/highlight-github.css">
+    <link rel="stylesheet" href="./Habilitar mod_rewrite no Apache_files/index.css">
+
+    <!--
+
+    include others css
+
+    <link  rel="stylesheet" media="screen" href="/assets/foo/style.css" >
+
+    -->
+
+    </head>
+    <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+
+          
+          <ol class="breadcrumb navbar-static-top">
+              <li><a href="http://devfuria.com.br/">devfuria.com.br</a></li>
+              <li><a href="http://devfuria.com.br/linux">linux</a></li>
+              <li class="active">apache-habilitar-mod_rewrite-no-apache-mod</li>
+          </ol>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info alert-dismissible text-center" role="alert">
+    <p><small>divulgando nosso <a href="https://www.youtube.com/user/DevFuria">canal do youtube</a></small></p>
+
+    <iframe width="560" height="315" src="./Habilitar mod_rewrite no Apache_files/3r2bMrqjUPM.html" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+    <p>Se <a href="https://www.youtube.com/user/DevFuria?sub_confirmation=1">inscreva em nosso canal</a> para não perder nenhuma novidade</p>
+</div>
+
+
+    <article class="container">
+      <div class="row">
+        <div class="col-sm-offset-2 col-md-8">
+          <div class="page-header">
+            <h1>Habilitar mod_rewrite no Apache <br><small>Aprenda como habilitar o módulo mod_rewrite no servidor Apache</small></h1>
+          </div>
+          <p>Esta é uma atividade corriqueira e que sempre nos esquecemos de como fazer, então aqui vai a “cola”…</p>
+
+<p>Vou mostrar como fazer isso no servidor Apache em uma máquina Debian/Ubuntu.</p>
+
+<p>Vamos habilitar o módulo de reescrita.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="hljs bash">$ <span class="hljs-built_in">cd</span> /etc/apache2/mods-available
+a2enmod rewrite
+</code></pre></div></div>
+
+<p>Também precisamos fazer uma pequena alteração no arquivo de configuração do Apache, o problema aqui é você encontrar o
+dito cujo.</p>
+
+<p>Normalmente ele se encontra neste local…</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="hljs python"><span class="hljs-comment">#</span>
+Família hedhat
+<span class="hljs-comment">#</span>
+/etc/httpd/conf/httpd.conf
+
+<span class="hljs-comment">#</span>
+família Debian
+<span class="hljs-comment">#</span>
+/etc/apache2/apache2.conf
+</code></pre></div></div>
+
+<p>Pode haver variações, por exemplo, o arquivo pode chamar-se <code class="language-plaintext highlighter-rouge">000-default.conf</code>.</p>
+
+<p>Em minha máquina (Ubuntu - Vivid Vervet) o local é este aqui…</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="hljs">/etc/apache2/apache2.conf
+</code></pre></div></div>
+
+<p>De qualquer forma você deve procurar o trecho abaixo.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="hljs php">&lt;Directory /<span class="hljs-keyword">var</span>/www/&gt;
+        Options Indexes FollowSymLinks
+        AllowOverride None <span class="hljs-comment"># &lt;---- ATENÇÂO</span>
+        <span class="hljs-keyword">Require</span> all granted
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>E alterar conforme abaixo.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="hljs php">&lt;Directory /<span class="hljs-keyword">var</span>/www/&gt;
+        Options Indexes FollowSymLinks
+        AllowOverride All <span class="hljs-comment"># &lt;---- ATENÇÂO</span>
+        <span class="hljs-keyword">Require</span> all granted
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<p>Agora basta <a href="http://devfuria.com.br/linux/apache-como-reiniciar-servidor-apache/">reiniciar o Apache</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="hljs">/etc/init.d/apache2 restart
+</code></pre></div></div>
+
+<p>Você deve executar o comando acima como root ou utilizar <code class="language-plaintext highlighter-rouge">sudo</code> no início do comando.</p>
+
+<h3 id="atenção-a-diretiva-directory">Atenção a diretiva directory</h3>
+
+<p>Aqui vai uma dica, o path (caminho) da diretiva deve apontar para a sua pasta de códigos (sua pasta de projetos),
+senão, “a coisa” não vai funcionar.</p>
+
+<p>Isso é válido, principalmente, no caso em que o valor de <code class="language-plaintext highlighter-rouge">DocumentRoot</code> tenha sido alterado.</p>
+
+<p>Em outras palavras, não adianta o seu <code class="language-plaintext highlighter-rouge">DocumentoRoot</code> apontar para <code class="language-plaintext highlighter-rouge">/seus/projetos/</code> e a diretiva <code class="language-plaintext highlighter-rouge">Directory</code> apontar
+para a pasta raíz (<code class="language-plaintext highlighter-rouge">/</code>), ela deve apontar para <code class="language-plaintext highlighter-rouge">/seus/projetos</code>.</p>
+
+<h3 id="testando">Testando</h3>
+
+<p>Para testar podemos fazer um redirecionamento simples, bem simples.</p>
+
+<p>Crie o arquivo <code class="language-plaintext highlighter-rouge">.htaccess</code> na pasta <code class="language-plaintext highlighter-rouge">seu-document-root/old/</code> e acesse http://localhost/old</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code class="hljs coffeescript"><span class="hljs-comment">#</span>
+<span class="hljs-regexp">/localhost/old/</span>.htaccess
+<span class="hljs-comment">#</span>
+Redirect permanent <span class="hljs-regexp">/old http:/</span><span class="hljs-regexp">/devfuria.com.br/</span>
+</code></pre></div></div>
+
+        </div>
+      </div>
+    </article>
+
+    <hr>
+
+    <footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="social-links">
+                    <li>
+                        <a href="https://github.com/devfuria" class="wow fadeInUp" data-wow-delay=".1s" target="_blank">
+                            <i class="fa fa-github-square">g</i>
+                        </a>
+                    </li>
+                </ul>
+                <p>
+                    Este obra está licenciado sob a
+                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+                        Creative Commons Atribuição 4.0 Internacional
+                    </a>.
+                </p>
+                <p>
+                    <a href="http://devfuria.com.br/">www.devfuria.com.br</a>
+                </p>
+                <p>
+                    desde 2012
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+    
+<script type="text/javascript" async="" src="./Habilitar mod_rewrite no Apache_files/analytics.js"></script><script src="./Habilitar mod_rewrite no Apache_files/jquery-2.1.4.min.js"></script>
+
+<script src="./Habilitar mod_rewrite no Apache_files/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="./Habilitar mod_rewrite no Apache_files/index.js"></script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="./Habilitar mod_rewrite no Apache_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-63607155-1');
+</script>
+
+
+
+    
+</body></html>
