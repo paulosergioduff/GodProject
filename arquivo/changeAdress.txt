@@ -1,4 +1,9 @@
 RewriteEngine on
-RewriteCond %{HTTP_HOST} ^http://localhost/godproject/$ [NC,OR] RewriteCond %{HTTP_HOST} ^http://localhost/godproject/$
-RewriteCond %{REQUEST_URI} !legacy/
-RewriteRule (.*) /legacy/$1 [L]
+
+RewriteCond %{HTTP_HOST} ^localhost$ [NC,OR]
+
+#RewriteCond %{HTTP_HOST} ^www.abc.com$ 
+
+RewriteCond %{REQUEST_URI} !godproject/
+
+RewriteRule (.*) /godproject/$1 [L]

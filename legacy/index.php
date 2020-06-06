@@ -3,6 +3,8 @@
         <title>My test</title>
     </head>
     <body>
-        My test 
+        My test PHP
+
+        <?php include "../include.php"; ?>
     </body>
 </html>
