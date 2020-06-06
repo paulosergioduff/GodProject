@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^http://localhost/godproject/$ [NC,OR] RewriteCond %{HTTP_HOST} ^http://localhost/godproject/$
+RewriteCond %{REQUEST_URI} !legacy/
+RewriteRule (.*) /legacy/$1 [L]
