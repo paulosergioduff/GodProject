@@ -5,6 +5,5 @@
     <body>
         My test PHP
 
-        <?php include "../include.php"; ?>
     </body>
 </html>
